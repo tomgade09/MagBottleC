@@ -8,12 +8,12 @@ int cToSTest()
 {
 	double xyzvalues[]{ 0.0, 5.6286, -5.6286 }; //arbitrary pos and neg numbers, symmetry makes testing easier
 	int hcrhoind[]    { 0, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 2, 2, 3, 3, 2, 3, 3, 1, 2, 2, 2, 3, 3, 2, 3, 3 }; //index values for rho, theta, phi hardcoded arrays
-	int hcthetaind[]  { 0, 0, 0, 2, 2, 2, 6, 6, 6, 0, 0, 0, 1, 1, 1, 7, 7, 7, 4, 4, 4, 3, 3, 3, 5, 5, 5 }; //generates a result appropriate to testval
-	int hcphiind[]    { 0, 0, 4, 2, 1, 3, 2, 1, 3, 2, 1, 3, 2, 5, 6, 2, 5, 6, 2, 1, 3, 2, 5, 6, 2, 5, 6 }; //elminates a 27 case switch (yuck)
+	int hcthetaind[]  { 0, 0, 4, 2, 1, 3, 2, 1, 3, 2, 1, 3, 2, 5, 6, 2, 5, 6, 2, 1, 3, 2, 5, 6, 2, 5, 6 }; //generates a result appropriate to testval
+	int hcphiind[]    { 0, 0, 0, 2, 2, 2, 6, 6, 6, 0, 0, 0, 1, 1, 1, 7, 7, 7, 4, 4, 4, 3, 3, 3, 5, 5, 5 }; //elminates a 27 case switch (yuck)
 
 	double hcrho[]	  { 0.0, sqrt(pow(5.6286, 2)), sqrt(2 * pow(5.6286,2)), sqrt(3 * pow(5.6286, 2)) }; //hard coded values
-	double hctheta[]  { 0.0, (M_PI_2 / 2.0), M_PI_2, (3 * M_PI_2 / 2.0), M_PI, (5 * M_PI_2 / 2.0), (3 * M_PI_2), (7 * M_PI_2 / 2.0) };
-	double hcphi[]	  { 0.0, (M_PI_2 / 2.0), M_PI_2, (3 * M_PI_2 / 2.0), M_PI, acos(hcrho[1] / hcrho[3]), acos(-hcrho[1] / hcrho[3]) };
+	double hctheta[]  { 0.0, (M_PI_2 / 2.0), M_PI_2, (3 * M_PI_2 / 2.0), M_PI, acos(hcrho[1] / hcrho[3]), acos(-hcrho[1] / hcrho[3]) };
+	double hcphi[]    { 0.0, (M_PI_2 / 2.0), M_PI_2, (3 * M_PI_2 / 2.0), M_PI, (5 * M_PI_2 / 2.0), (3 * M_PI_2), (7 * M_PI_2 / 2.0) };
 	
 	int indind{ 0 }; //index index - the index of the total number of iterations in the below 3 deep nested loop structure
 
@@ -27,10 +27,9 @@ int cToSTest()
 				dblArray3_t result = cartesianToSpherical(testval);
 				dblArray3_t hcresult{ hcrho[hcrhoind[indind]], hctheta[hcthetaind[indind]], hcphi[hcphiind[indind]] };
 				
-				indind++;
-				
 				if (!isFloatEql(result, hcresult))
-					return testErrHandler(testval, result, hcresult, "cartesianToSpherical");
+					return testErrHandler(testval, result, hcresult, "cartesianToSpherical", { static_cast<double>(indind), 0.0, 0.0 });
+				indind++;
 			}
 		}
 	}
@@ -42,12 +41,12 @@ int sToCTest()
 {
 	double hcxyzvalues[]{ 0.0, 5.6286, -5.6286 }; //arbitrary pos and neg numbers, symmetry makes testing easier
 	int hcrhoind[]		{ 0, 1, 1, 1, 2, 2, 1, 2, 2, 1, 2, 2, 2, 3, 3, 2, 3, 3, 1, 2, 2, 2, 3, 3, 2, 3, 3 }; //index values for rho, theta, phi arrays
-	int hcthetaind[]	{ 0, 0, 0, 2, 2, 2, 6, 6, 6, 0, 0, 0, 1, 1, 1, 7, 7, 7, 4, 4, 4, 3, 3, 3, 5, 5, 5 }; //generates a testval that corresponds with result
-	int hcphiind[]		{ 0, 0, 4, 2, 1, 3, 2, 1, 3, 2, 1, 3, 2, 5, 6, 2, 5, 6, 2, 1, 3, 2, 5, 6, 2, 5, 6 }; //elminates a 27 case switch (yuck)
+	int hcthetaind[]    { 0, 0, 4, 2, 1, 3, 2, 1, 3, 2, 1, 3, 2, 5, 6, 2, 5, 6, 2, 1, 3, 2, 5, 6, 2, 5, 6 }; //generates a testval that corresponds with result
+	int hcphiind[]      { 0, 0, 0, 2, 2, 2, 6, 6, 6, 0, 0, 0, 1, 1, 1, 7, 7, 7, 4, 4, 4, 3, 3, 3, 5, 5, 5 }; //elminates a 27 case switch (yuck)
 
 	double rho[]		{ 0.0, sqrt(pow(5.6286, 2)), sqrt(2 * pow(5.6286,2)), sqrt(3 * pow(5.6286, 2)) };
-	double theta[]		{ 0.0, (M_PI_2 / 2.0), M_PI_2, (3 * M_PI_2 / 2.0), M_PI, (5 * M_PI_2 / 2.0), (3 * M_PI_2), (7 * M_PI_2 / 2.0) };
-	double phi[]		{ 0.0, (M_PI_2 / 2.0), M_PI_2, (3 * M_PI_2 / 2.0), M_PI, acos(rho[1] / rho[3]), acos(-rho[1] / rho[3]) };
+	double theta[]      { 0.0, (M_PI_2 / 2.0), M_PI_2, (3 * M_PI_2 / 2.0), M_PI, acos(rho[1] / rho[3]), acos(-rho[1] / rho[3]) };
+	double phi[]		{ 0.0, (M_PI_2 / 2.0), M_PI_2, (3 * M_PI_2 / 2.0), M_PI, (5 * M_PI_2 / 2.0), (3 * M_PI_2), (7 * M_PI_2 / 2.0) };
 	
 	int indind{ 0 }; //index index - the index of the total number of iterations in the below 3 deep nested loop structure
 
@@ -60,11 +59,10 @@ int sToCTest()
 				dblArray3_t testval{ rho[hcrhoind[indind]], theta[hcthetaind[indind]], phi[hcphiind[indind]] };
 				dblArray3_t result = sphericalToCartesian(testval);
 				dblArray3_t hcresult{ hcxyzvalues[iii], hcxyzvalues[jjj], hcxyzvalues[kkk] };
-
-				indind++;
 				
 				if (!isFloatEql(result, hcresult))
-					return testErrHandler(testval, result, hcresult, "sphericalToCartesian");
+					return testErrHandler(testval, result, hcresult, "sphericalToCartesian", { static_cast<double>(indind), 0.0, 0.0 });
+				indind++;
 			}
 		}
 	}
@@ -74,19 +72,15 @@ int sToCTest()
 
 int rotCVectorTest()
 {
-	//rotTheta, rotPhi = 0
-	//rotations +/- 90 x 4 rottheta, rotphi
-	//overall theta, phi < 0
-	//overall theta > 180, overall phi > 360
 	
 	dblArray3_t testval{ 1, 1, 1 };
 	double hcxsign[]   { -1.0, -1.0,  1.0,  1.0,   -1.0, -1.0,  1.0,  1.0/*,        cos(M_PI_4), -1.0, -1.0,  1.0,    1.0, -1.0, -1.0,  1.0*/ }; //hard coded vector values
 	double hcysign[]   {  1.0, -1.0, -1.0,  1.0,    1.0, -1.0, -1.0,  1.0/*,        cos(M_PI_4), -1.0, -1.0,  1.0,   -1.0,  1.0,  1.0, -1.0*/ };
 	double hczsign[]   {  1.0,  1.0,  1.0,  1.0,   -1.0, -1.0, -1.0, -1.0/*,   -2 * cos(M_PI_4), -1.0,  1.0,  1.0,   -1.0, -1.0,  1.0,  1.0*/ };
-	int hcind[]  { 0, 1, 2, 3, 2, 1, 0, 3,    4, 5, 6, 7, 6, 5, 4, 7/*,    8, 9, 10, 11, 10, 9, 8, 11,    12, 13, 14, 15, 14, 13, 12, 15*/ }; //indexes to traverse sign values above
+	int hcind[]     { 0, 1, 2, 3, 2, 1, 0, 3,    4, 5, 6, 7, 6, 5, 4, 7/*,    8, 9, 10, 11, 10, 9, 8, 11,    12, 13, 14, 15, 14, 13, 12, 15*/ }; //indexes to traverse sign values above
 	
-	double rotTheta[]  { M_PI_2, -M_PI_2, 0.0, -M_PI_2 };
-	double rotPhi[]    { M_PI_2, -M_PI_2, 0.0,  M_PI_2 };
+	double rotPhi[]    { M_PI_2, -M_PI_2, 0.0, -M_PI_2 };
+	double rotTheta[]  { M_PI_2, -M_PI_2, 0.0,  M_PI_2 };
 
 	dblArray3_t result = rotateCartesianVector(testval, 0.0, 0.0, 1); //no rotation case
 	if (result != testval)
@@ -101,8 +95,7 @@ int rotCVectorTest()
 		{
 			for (int kkk = 0; kkk < 4; kkk++)
 			{
-				//std::cout << "Testval: " << dA3ToStr(testval) << std::endl;
-				result = rotateCartesianVector(testval, rotTheta[jjj], 0.0);
+				result = rotateCartesianVector(testval, 0.0, rotPhi[jjj]);
 				hcresult = { hcxsign[hcind[indind]], hcysign[hcind[indind]], hczsign[hcind[indind]] };
 
 				if (!isFloatEql(result, hcresult))
@@ -148,7 +141,7 @@ int crossVectorTest()
 	double yval[]{ 5.0, -1.0,  1.0,    5.0,  0.0,  4.0 }; //1. a x a, 2. a x 0
 	double zval[]{ 6.0,  1.0,  1.0,    6.0,  0.0, -4.0 }; //3. a x b (perpen.) * 0
 	double cnst[]{ 1.0,  1.0,  0.0 };
-	int len{ 3 }; // match to length of cnst or x|y|zval / 2
+	int len      { 3 }; // match to length of cnst or x|y|zval / 2
 
 	double hc[]  { 0.0,  0.0,  0.0 };
 
