@@ -1,8 +1,8 @@
-#include "vectortools.h"
-#include <string>
-
 #ifndef TESTSUITE_H
 #define TESTSUITE_H
+
+#include "vectortools.h"
+#include <string>
 
 std::string dA3ToStr(const dblArray3_t& var);
 dblArray3_t subdblAr(const dblArray3_t& x, const dblArray3_t& y);
