@@ -1,6 +1,5 @@
 #include <cmath>
 #include <iostream>
-#include <string>
 #include "vectortools.h"
 
 //Physics (ISO) convention for spherical used: phi = angle from x axis, theta = angle from z axis
@@ -106,7 +105,20 @@ dblArray3_t dA3add(const dblArray3_t& a, const dblArray3_t& b)
 	return{ a[0] + b[0], a[1] + b[1], a[2] + b[2] };
 }
 
+dblArray3_t dA3sub(const dblArray3_t& x, const dblArray3_t& y)
+{
+	dblArray3_t ret;
+	for (int ii = 0; ii < 3; ii++)
+		ret[ii] = x[ii] - y[ii];
+	return ret;
+}
+
 double dA3len(const dblArray3_t& a)
 {
 	return sqrt(pow(a[0], 2) + pow(a[1], 2) + pow(a[2], 2));
+}
+
+std::string dA3ToStr(const dblArray3_t& var)
+{
+	return "{ " + std::to_string(var[0]) + ", " + std::to_string(var[1]) + ", " + std::to_string(var[2]) + " }";
 }

@@ -53,10 +53,9 @@ dblArray3_t WireCoil::calcBatP(const dblArray3_t& P)
 	setIntegConst(P);
 	dblArray3_t B{ 0.0, 0.0, 0.0 };
 
-	double* cbfunc[3]; //need to fix this
-	cbfunc[0] = &dBx;
-	cbfunc[1] = &dBy;
-	cbfunc[2] = &dBz;
+	typedef double(*FcnPtr)(double);
+	
+	const FcnPtr fp [3]= { &dBx, &dBy, &dBz };
 
 	for (int jjj = 0; jjj <= 2; jjj++)
 	{

@@ -2,23 +2,10 @@
 #include <cmath>
 #include "testsuitetools.h"
 
-std::string dA3ToStr(const dblArray3_t& var)
-{
-	return "{ " + std::to_string(var[0]) + ", " + std::to_string(var[1]) + ", " + std::to_string(var[2]) + " }";
-}
-
-dblArray3_t subdblAr(const dblArray3_t& x, const dblArray3_t& y)
-{
-	dblArray3_t ret;
-	for (int ii = 0; ii < 3; ii++)
-		ret[ii] = x[ii] - y[ii];
-	return ret;
-}
-
 bool isFloatEql(const dblArray3_t& x, const dblArray3_t& y)
 {
 	bool fpEql = 1;
-	dblArray3_t diff = subdblAr(x, y);
+	dblArray3_t diff = dA3sub(x, y);
 
 	for (int ii = 0; ii < 3; ii++)
 	{
@@ -72,7 +59,7 @@ int testErrHandler(const dblArray3_t& testval, const dblArray3_t& result, const 
 	std::cout << "Other vars:       " << dA3ToStr(otherVar) << std::endl;
 	std::cout << "Result:           " << dA3ToStr(result) << std::endl;
 	std::cout << "Hard Coded Value: " << dA3ToStr(hcresult) << std::endl;
-	dblArray3_t errordblA3 = subdblAr(result, hcresult);
+	dblArray3_t errordblA3 = dA3sub(result, hcresult);
 	for (int lll = 0; lll < 3; lll++)
 	{
 		errordblA3[lll] *= 1e14;

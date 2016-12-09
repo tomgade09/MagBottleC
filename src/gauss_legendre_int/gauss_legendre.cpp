@@ -229,8 +229,8 @@ int(f(t),t=a..b) = A*sum(w[i]*f(A*x[i]+B),i=0..n-1)
 	A = (b-a)/2, 
 	B = (a+b)/2
 */
-
-double gauss_legendre(int n, double (*f)(double,void*), void* data, double a, double b)
+#include "WireCoil_c.h" //CHANGE: added everything "WireCoil"
+double gauss_legendre(int n, double (*f)(double,void*,WireCoil*), void* data, double a, double b, WireCoil* wc)
 {
 	double* x = NULL;
 	double* w = NULL;
@@ -269,11 +269,11 @@ double gauss_legendre(int n, double (*f)(double,void*), void* data, double a, do
 
 	if(n&1) /* n - odd */
 	{
-		s = w[0]*((*f)(B,data));
+		s = w[0]*((*f)(B,data,wc)); //CHANGE: added ,wc to *f
 		for (i=1;i<m;i++)
 		{
 			Ax = A*x[i];
-			s += w[i]*((*f)(B+Ax,data)+(*f)(B-Ax,data));
+			s += w[i]*((*f)(B+Ax,data,wc)+(*f)(B-Ax,data,wc)); //CHANGE: added ,wc to *f
 		}
 
 	}else{ /* n - even */
@@ -282,7 +282,7 @@ double gauss_legendre(int n, double (*f)(double,void*), void* data, double a, do
 		for (i=0;i<m;i++)
 		{
 			Ax = A*x[i];
-			s += w[i]*((*f)(B+Ax,data)+(*f)(B-Ax,data));			
+			s += w[i]*((*f)(B+Ax,data,wc)+(*f)(B-Ax,data,wc)); //CHANGE: added ,wc to *f
 		}
 	}
 

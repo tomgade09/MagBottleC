@@ -1,10 +1,9 @@
 #ifndef BFIELD_WIRECOIL_H
 #define BFIELD_WIRECOIL_H
-#include "vectortools.h"
+#include "constsandtypes.h"
+#include "BObject_c.h"
 
-#define SCALE 10e-5 //replace with global const in some header someday
-
-class WireCoil
+class WireCoil : public BObject
 {
 private:
 	std::string name_m;
@@ -20,7 +19,8 @@ private:
 	double constant_m; //constant that is easier to calculate once
 	bool rightLoop_m; //is this the left or right loop? right loop = 1, left loop = 0 - of course left/right are relative - B flows from left to right loop
 	//what other variables needed?
-	double c1_m;
+
+	double c1_m; //variables for numerical integration
 	double c2_m;
 	double c3_m;
 	double a4_m;
@@ -29,18 +29,25 @@ private:
 	double c6_m;
 	double c7_m;
 
-	double dBx(double x);
-	double dBy(double x);
-	double dBz(double x);
+	void setIntegConst(const dblArray3_t& P);
+	//double gauss_legendre_m(int n, double(*f)(double, void*), void* data, double a, double b)
+	
+	typedef double(WireCoil::*wcMFptr)(double, void*);
+	wcMFptr dBxPtr{ &WireCoil::dBx };
+	wcMFptr dByPtr{ &WireCoil::dBy };
+	wcMFptr dBzPtr{ &WireCoil::dBz };
+	wcMFptr MFP_m[3] = { dBxPtr, dByPtr, dBzPtr };
 
 public:
 	WireCoil(const dblArray3_t& coilCenter, const dblArray3_t& coilAxis, int N, double I, double R, bool rightLoop, std::string name = "", int* window = nullptr, int* pic = nullptr) 
 		: coilCenter_m(coilCenter), coilAxis_m(coilAxis), N_m{ N }, I_m{ I }, R_m{ R }, rightLoop_m{ rightLoop }, name_m { name	}, window_m{ window }, pic_m{ pic }, 
-		  constant_m{ N * I * SCALE }, d_m{}/*Is this variable needed?*/ { Init(); }
+		  constant_m{ N * I * SCALE }, d_m{0.0} { Init(); }
 
 	void Init();
 
-	void setIntegConst(const dblArray3_t& P);
+	double dBx(double x, void* data);
+	double dBy(double x, void* data);
+	double dBz(double x, void* data);
 
 	dblArray3_t calcBatP(const dblArray3_t& P);
 };
