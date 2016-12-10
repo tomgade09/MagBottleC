@@ -77,6 +77,5 @@ dblArray3_t WireCoil::calcBatP(const dblArray3_t& P)
 		for (int iii = 2; iii <= 128; iii++)
 			B[jjj] = gauss_legendre(iii, FP[jjj], NULL, 0, 2 * M_PI, dBCst[jjj]);
 
-
 	return B;
 }

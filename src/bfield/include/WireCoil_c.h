@@ -20,23 +20,16 @@ private:
 	bool rightLoop_m; //is this the left or right loop? right loop = 1, left loop = 0 - of course left/right are relative - B flows from left to right loop
 	//what other variables needed?
 
-	double c1_m; //variables for numerical integration
-	double c2_m;
-	double c3_m;
-	double a4_m;
-	double c4_m;
-	double c5_m;
-	double c6_m;
-	double c7_m;
+	double c1_m{ 0.0 }; //variables for numerical integration
+	double c2_m{ 0.0 };
+	double c3_m{ 0.0 };
+	double a4_m{ 0.0 };
+	double c4_m{ 0.0 };
+	double c5_m{ 0.0 };
+	double c6_m{ 0.0 };
+	double c7_m{ 0.0 };
 
 	void setIntegConst(const dblArray3_t& P);
-	//double gauss_legendre_m(int n, double(*f)(double, void*), void* data, double a, double b)
-	
-	typedef double(WireCoil::*wcMFptr)(double, void*);
-	wcMFptr dBxPtr{ &WireCoil::dBx };
-	wcMFptr dByPtr{ &WireCoil::dBy };
-	wcMFptr dBzPtr{ &WireCoil::dBz };
-	wcMFptr MFP_m[3] = { dBxPtr, dByPtr, dBzPtr };
 
 public:
 	WireCoil(const dblArray3_t& coilCenter, const dblArray3_t& coilAxis, int N, double I, double R, bool rightLoop, std::string name = "", int* window = nullptr, int* pic = nullptr) 
@@ -45,9 +38,9 @@ public:
 
 	void Init();
 
-	double dBx(double x, void* data);
-	double dBy(double x, void* data);
-	double dBz(double x, void* data);
+	static double dBx(double x, void* data, double var[6]);
+	static double dBy(double x, void* data, double var[6]);
+	static double dBz(double x, void* data, double var[6]);
 
 	dblArray3_t calcBatP(const dblArray3_t& P);
 };

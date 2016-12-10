@@ -4,7 +4,7 @@
 
 dblArray3_t BField::totalBatP(const dblArray3_t& P, bool WarnFlag)
 {
-	dblArray3_t b{ 0.0, 0.0, 0.0 };
+	dblArray3_t B{ 0.0, 0.0, 0.0 };
 	
 	if (!bObjPtrList_m[0])
 	{
@@ -21,21 +21,23 @@ dblArray3_t BField::totalBatP(const dblArray3_t& P, bool WarnFlag)
 			continue;
 		}
 		c = bObjPtrList_m[iii]->calcBatP(P);
-		std::cout << dA3ToStr(c) << std::endl;
+		
 		for (int jjj = 0; jjj < 3; jjj++)
-			b[jjj] += c[jjj];
+			B[jjj] += c[jjj];
 	}
 
 	incTime();
 
-	return b;
+	return B;
 }
 
 void BField::addBObj(BObject* bobjptr)
 {
 	if (!bObjPtrList_m[0] && (bObjPtrList_m.size() == 1))
+	{
 		std::cout << "Warning: Nullptr at bObjPtrList[0].  Popping off." << std::endl;
 		bObjPtrList_m.pop_back();
+	}
 	bObjPtrList_m.push_back(bobjptr);
-	std::cout << "Added BObj" << std::endl;
+	std::cout << "Added BObj.  Size: " << std::to_string(bObjPtrList_m.size()) << std::endl;
 }

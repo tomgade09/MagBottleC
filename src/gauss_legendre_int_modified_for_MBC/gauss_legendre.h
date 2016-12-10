@@ -53,10 +53,10 @@
 #ifndef __GAUSS_LEGENDRE_H__
 #define __GAUSS_LEGENDRE_H__
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
+//#ifdef __cplusplus //CHANGE: commented out stuff
+//extern "C"
+//{
+//#endif
 
 	/* Numerical computation of int(f(x),x=a..b) by Gauss-Legendre n-th order high precision quadrature 
 		[in]n     - quadrature order
@@ -68,7 +68,8 @@ extern "C"
 		return:
 	         -computed integral value or -1.0 if n order quadrature is not supported
 	*/
-	double gauss_legendre(int n, double(*f)(double, void*, double*), void* data, double a, double b, double cons[6]); //MODIFIED
+#include "WireCoil_c.h" //CHANGE: added "WireCoil_c.h", all WireCoil* references
+	double gauss_legendre(int n, double(*f)(double, void*, WireCoil*), void* data, double a, double b, WireCoil* wc);
 
 	/* 2D Numerical computation of int(f(x,y),x=a..b,y=c..d) by Gauss-Legendre n-th order high precision quadrature 
 		[in]n     - quadrature order
@@ -90,9 +91,9 @@ extern "C"
 	*/
 	void gauss_legendre_tbl(int n, double* x, double* w, double eps);
 
-#ifdef __cplusplus
-}
-#endif
+//#ifdef __cplusplus //CHANGE: commented out stuff
+//}
+//#endif
 
 #endif /* __GAUSS_LEGENDRE_H__ */
 

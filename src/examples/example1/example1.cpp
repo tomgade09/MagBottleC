@@ -31,13 +31,13 @@ int main()
 	
 	long long int loopind{ 0 };
 
-	while (B.getTime() < 1e-6)
+	while (B.getTime() < 5e-7)
 	{
-		electron1.updP(B.totalBatP(electron1.getP()), B.getdt());
+		electron1.updP(B.totalBatP(electron1.getP(),1), B.getdt());
 		
-		if (loopind % 1000 == 0)
+		if (loopind % 100 == 0)
 		{
-			std::cout << "Index: " << std::to_string(loopind) << " | Location: " << dA3ToStr(electron1.getP()) << std::endl;
+			std::cout << "Location: " << dA3ToStr(electron1.getP()) << " | Index: " << std::to_string(loopind) << " | dT: " << std::to_string(B.getdt()) << std::endl;
 			std::cout << "Velocity: " << dA3ToStr(electron1.getV()) << " | Time: " << std::to_string(B.getTime()) << std::endl;
 		}
 		loopind++;

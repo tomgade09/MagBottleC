@@ -230,6 +230,8 @@ int(f(t),t=a..b) = A*sum(w[i]*f(A*x[i]+B),i=0..n-1)
 	B = (a+b)/2
 */
 #include "WireCoil_c.h" //CHANGE: added everything "WireCoil"
+#include <iostream>
+#include <string>
 double gauss_legendre(int n, double (*f)(double,void*,WireCoil*), void* data, double a, double b, WireCoil* wc)
 {
 	double* x = NULL;
@@ -266,7 +268,7 @@ double gauss_legendre(int n, double (*f)(double,void*,WireCoil*), void* data, do
 
 	A = 0.5*(b-a);
 	B = 0.5*(b+a);
-
+	std::cout << "A: " << std::to_string(A) << ", B: " << std::to_string(B) << std::endl;
 	if(n&1) /* n - odd */
 	{
 		s = w[0]*((*f)(B,data,wc)); //CHANGE: added ,wc to *f
@@ -291,6 +293,8 @@ double gauss_legendre(int n, double (*f)(double,void*,WireCoil*), void* data, do
 		free(x);
 		free(w);
 	}
+
+	std::cout << "A: " << std::to_string(A) << ", s: " << std::to_string(s) << ", A*s: " << std::to_string(A*s) << std::endl;
 	return A*s;
 }
 

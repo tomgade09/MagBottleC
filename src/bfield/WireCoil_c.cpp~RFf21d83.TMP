@@ -8,7 +8,7 @@
 
 void WireCoil::Init()
 {
-	dblArray3_t a{ { 1.0, M_PI_2, 0.0 } };
+	dblArray3_t a{ {1.0, M_PI_2, 0.0 } };
 	dblArray3_t b(cartesianToSpherical(coilAxis_m));
 	axisRot_m[0] = 1.0;
 
@@ -25,14 +25,17 @@ void WireCoil::Init()
 
 void WireCoil::setIntegConst(const dblArray3_t& P)
 {
-	c1_m = { -constant_m * R_m * P[2] };
-	c2_m = { -constant_m * R_m * P[1] };
-	c3_m = { constant_m * pow(R_m,2) };
-	a4_m = { pow(P[0],2) + pow(P[1],2) + pow(P[2],2) };
-	c4_m = { a4_m + 2 * P[0] * d_m + pow(d_m, 2) + pow(R_m, 2) };
-	c5_m = { -2 * P[1] * R_m };
-	c6_m = { -2 * P[2] * R_m };
-	c7_m = { constant_m * R_m * (P[0] + d_m) };
+	double c1_m = { -constant_m * R_m * P[2] };
+	double c2_m = { -constant_m * R_m * P[1] };
+	double c3_m = { constant_m * pow(R_m,2) };
+	double a4_m = { pow(P[0],2) + pow(P[1],2) + pow(P[2],2) };
+	double c4_m = { a4_m + 2 * P[0] * d_m + pow(d_m, 2) + pow(R_m, 2) };
+	double c5_m = { -2 * P[1] * R_m };
+	double c6_m = { -2 * P[2] * R_m };
+	double c7_m = { constant_m * R_m * (P[0] + d_m) };
+
+	std::cout << "Set Const: " << std::to_string(c1_m) << ", " << std::to_string(c2_m) << ", " << std::to_string(c3_m) << ", "
+		<< std::to_string(c4_m) << ", " << std::to_string(c5_m) << ", " << std::to_string(c6_m) << ", " << std::to_string(c7_m) << std::endl;
 }
 
 /*double WireCoil::gauss_legendre_m(int n, double(*f)(double, void*), void* data, double a, double b)
@@ -44,6 +47,9 @@ void WireCoil::setIntegConst(const dblArray3_t& P)
 
 double WireCoil::dBx(double x, void* data, double var[6])
 {
+	for (int ii = 0; ii < 6; ii++)
+		std::cout << std::to_string(var[ii]) << ", ";
+	std::cout << std::endl;
 	//return ((c1_m * sin(x) + c2_m * cos(x) + c3_m) / pow((c4_m + c5_m * cos(x) + c6_m * sin(x)), 1.5));
 	return ((var[0] * sin(x) + var[1] * cos(x) + var[2]) / pow((var[3] + var[4] * cos(x) + var[5] * sin(x)), 1.5));
 }
@@ -62,11 +68,14 @@ double WireCoil::dBz(double x, void* data, double var[6])
 
 dblArray3_t WireCoil::calcBatP(const dblArray3_t& P)
 {
-	//std::cout << "WireCoil::calcBatP: " << name_m << std::endl;
+	std::cout << "WireCoil::calcBatP: " << name_m << std::endl;
 	setIntegConst(P);
 
 	dblArray3_t B{ 0.0, 0.0, 0.0 };
 
+	//typedef double(*FP)(double, void*, WireCoil*);
+	//FP FP1[3]{ &dBx, &dBy, &dBz };
+	//double(*FP)(double, void*, double);
 	typedef double(*SFP)(double, void*, double[]);
 	SFP FP[3] = { dBx, dBy, dBz };
 	double dBxCst[6]{ c1_m, c2_m, c3_m, c4_m, c5_m, c6_m };
@@ -77,6 +86,20 @@ dblArray3_t WireCoil::calcBatP(const dblArray3_t& P)
 		for (int iii = 2; iii <= 128; iii++)
 			B[jjj] = gauss_legendre(iii, FP[jjj], NULL, 0, 2 * M_PI, dBCst[jjj]);
 
-
 	return B;
 }
+
+/*static double dBx_wrap(double x, void* data, WireCoil* wc)
+{
+	return wc->dBx(x, data);
+}
+
+static double dBy_wrap(double x, void* data, WireCoil* wc)
+{
+	return wc->dBy(x, data);
+}
+
+static double dBz_wrap(double x, void* data, WireCoil* wc)
+{
+	return wc->dBy(x, data);
+}*/
