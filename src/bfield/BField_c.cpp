@@ -2,7 +2,7 @@
 #include <iostream>
 #include "vectortools.h"
 
-dblArray3_t BField::totalBatP(const dblArray3_t& P, bool WarnFlag)
+dblArray3_t BField::totalBatP(const dblArray3_t& P, int norder, bool WarnFlag)
 {
 	dblArray3_t B{ 0.0, 0.0, 0.0 };
 	
@@ -20,7 +20,7 @@ dblArray3_t BField::totalBatP(const dblArray3_t& P, bool WarnFlag)
 			if (WarnFlag) { std::cout << "Warning (totalBatP): nullptr in bObjPtrList_m at index " << std::to_string(iii) << ".  Skipping this index." << std::endl; }
 			continue;
 		}
-		c = bObjPtrList_m[iii]->calcBatP(P);
+		c = bObjPtrList_m[iii]->calcBatP(P,norder);
 		
 		for (int jjj = 0; jjj < 3; jjj++)
 			B[jjj] += c[jjj];

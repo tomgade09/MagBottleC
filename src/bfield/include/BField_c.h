@@ -32,7 +32,7 @@ public:
 
 	//defined in .cpp
 	void addBObj(BObject* bobjptr); //add pointer to instance of BObject to bObjPtrList_m
-	dblArray3_t totalBatP(const dblArray3_t& p, bool WarnFlag = 0);
+	dblArray3_t totalBatP(const dblArray3_t& p, int norder, bool WarnFlag = 0);
 };
 
 #endif

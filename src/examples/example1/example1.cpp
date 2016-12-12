@@ -18,7 +18,7 @@ int main()
 	
 	std::cout << "WireCoils created." << std::endl;
 	
-	dblArray3_t e1posinit{ -4.75, 0.0, 0.0 };
+	dblArray3_t e1posinit{ -4.75, 1.0, 1.0 };
 	dblArray3_t e1velinit{ 1000.0, 1000.0, 1000.0 };
 	Particle electron1 = Particle(-1.60217657e-19, 9.10938356e-31, e1posinit, e1velinit);
 	
@@ -28,18 +28,29 @@ int main()
 	B.addBObj(&WC2);
 	
 	std::cout << "addBObj complete." << std::endl;
-	
+	//std::cout.precision(14);
 	long long int loopind{ 0 };
-
-	while (B.getTime() < 5e-7)
+	dblArray3_t Bstr{ nulldA3_t };
+	while (B.getTime() <= 5e-7)
 	{
-		electron1.updP(B.totalBatP(electron1.getP(),1), B.getdt());
+		//for (int iii = 2; iii <= 128; iii++) //commented code for testing for appropriate n order
+		//{
+			//Bstr = B.totalBatP(electron1.getP(), iii);
+			//std::cout << "n: " << iii;
+			//std::cout << "  B: ";
+			//dA3coutSci(Bstr);
+		//}
+		Bstr = B.totalBatP(electron1.getP(), 37);
+		//exit(0);
+		electron1.updP(Bstr, B.getdt());
 		
-		if (loopind % 100 == 0)
+		if (loopind % 1000 == 0)
 		{
-			std::cout << "Location: " << dA3ToStr(electron1.getP()) << " | Index: " << std::to_string(loopind) << " | dT: " << std::to_string(B.getdt()) << std::endl;
-			std::cout << "Velocity: " << dA3ToStr(electron1.getV()) << " | Time: " << std::to_string(B.getTime()) << std::endl;
+			std::cout << "Location: " << dA3ToStr(electron1.getP()) << " | Index: " << loopind << " | dT: " << B.getdt() << std::endl;
+			std::cout << "Velocity: " << dA3ToStr(electron1.getV()) << " | Time: " << std::scientific << B.getTime() << std::endl;
+			std::cout << std::endl;
 		}
+		
 		loopind++;
 	}
 }

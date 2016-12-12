@@ -11,5 +11,6 @@ dblArray3_t dA3add(const dblArray3_t& a, const dblArray3_t& b);
 dblArray3_t dA3sub(const dblArray3_t& x, const dblArray3_t& y);
 double dA3len(const dblArray3_t& a);
 std::string dA3ToStr(const dblArray3_t& var);
+void dA3coutSci(const dblArray3_t& var);
 
 #endif

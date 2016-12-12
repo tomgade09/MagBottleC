@@ -6,7 +6,7 @@ class BObject
 {
 public:
 	virtual ~BObject() {}
-	virtual dblArray3_t calcBatP(const dblArray3_t& P) = 0;
+	virtual dblArray3_t calcBatP(const dblArray3_t& P, int norder) = 0;
 };
 
 #endif

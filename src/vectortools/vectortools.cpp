@@ -101,9 +101,7 @@ dblArray3_t cross3dVectorsAndMultByConst(const dblArray3_t& a, const dblArray3_t
 }
 
 dblArray3_t dA3add(const dblArray3_t& a, const dblArray3_t& b)
-{
-	return{ a[0] + b[0], a[1] + b[1], a[2] + b[2] };
-}
+	{ return{ a[0] + b[0], a[1] + b[1], a[2] + b[2] }; }
 
 dblArray3_t dA3sub(const dblArray3_t& x, const dblArray3_t& y)
 {
@@ -114,11 +112,10 @@ dblArray3_t dA3sub(const dblArray3_t& x, const dblArray3_t& y)
 }
 
 double dA3len(const dblArray3_t& a)
-{
-	return sqrt(pow(a[0], 2) + pow(a[1], 2) + pow(a[2], 2));
-}
+	{ return sqrt(pow(a[0], 2) + pow(a[1], 2) + pow(a[2], 2)); }
 
 std::string dA3ToStr(const dblArray3_t& var)
-{
-	return "{ " + std::to_string(var[0]) + ", " + std::to_string(var[1]) + ", " + std::to_string(var[2]) + " }";
-}
+	{ return "{ " + std::to_string(var[0]) + ", " + std::to_string(var[1]) + ", " + std::to_string(var[2]) + " }"; }
+
+void dA3coutSci(const dblArray3_t& var)
+	{ std::cout << "{ " << std::scientific << var[0] << ", " << var[1] << ", " << var[2] << " }" << std::endl; }

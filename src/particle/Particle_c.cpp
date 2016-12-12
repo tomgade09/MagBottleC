@@ -18,7 +18,7 @@ void Particle::updP(const dblArray3_t& B, double dt)
 		position_m[iii] += (velocity_m[iii] * dt);
 }
 
-dblArray3_t Particle::calcBatP(const dblArray3_t& p)
+dblArray3_t Particle::calcBatP(const dblArray3_t& p, int norder)
 {
 	dblArray3_t r{ p[0] - position_m[0], p[1] - position_m[1], p[2] - position_m[2] };
 	bool boo = 1;
