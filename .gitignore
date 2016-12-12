@@ -28,4 +28,6 @@
 *.out
 *.app
 
+# Other Miscellanies + vb nonsense
+*.tmp
 vbProject/
