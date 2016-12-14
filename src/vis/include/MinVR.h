@@ -1,12 +1,21 @@
 #pragma once
 #include <glew.h>
+#include <GL/GL.h>
+#include <GL/GLU.h>
+#include <string>
+#include <iostream>
+#include <math.h>
+
+#define INSTALLPATH "C:\Users\Tom\src\MagBottleC\vbProject\MagBottleC\Debug"
+#include <display/VRConsoleNode.h>
+#include <main/VRMain.h>
+#include <main/VREventHandler.h>
+#include <main/VRRenderHandler.h>
+#include <math/VRMath.h>
+#include <main/impl/VRDefaultAppLauncher.h>
+
 #define NOMINMAX
-#include <Windows.h>
-#include "display/VRConsoleNode.h"
-#include "main/VRMain.h"
-#include "main/VREventHandler.h"
-#include "main/VRRenderHandler.h"
-#include "math/VRMath.h"
+#include <windows.h>
 #include <vector>
 #include "BObject_c.h"
 #include "ItemDraw_c.h"
