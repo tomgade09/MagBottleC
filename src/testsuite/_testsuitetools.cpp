@@ -5,7 +5,7 @@
 bool isFloatEql(const dblArray3_t& x, const dblArray3_t& y)
 {
 	bool fpEql = 1;
-	dblArray3_t diff = dA3sub(x, y);
+	dblArray3_t diff( x - y );
 
 	for (int ii = 0; ii < 3; ii++)
 	{
@@ -55,17 +55,17 @@ int testErrCode(const dblArray3_t& testval, const dblArray3_t& result, const dbl
 int testErrHandler(const dblArray3_t& testval, const dblArray3_t& result, const dblArray3_t& hcresult, std::string name, const dblArray3_t& otherVar)
 { //handles errors: finds error code using testErrCode and prints relevant info about the error to cout
 	std::cout << "Func causing error: " << name << std::endl;
-	std::cout << "Test Value:       " << dA3ToStr(testval) << std::endl;
-	std::cout << "Other vars:       " << dA3ToStr(otherVar) << std::endl;
-	std::cout << "Result:           " << dA3ToStr(result) << std::endl;
-	std::cout << "Hard Coded Value: " << dA3ToStr(hcresult) << std::endl;
-	dblArray3_t errordblA3 = dA3sub(result, hcresult);
+	std::cout << "Test Value:       " << testval << std::endl;
+	std::cout << "Other vars:       " << otherVar << std::endl;
+	std::cout << "Result:           " << result << std::endl;
+	std::cout << "Hard Coded Value: " << hcresult << std::endl;
+	dblArray3_t errordblA3 = (result - hcresult);
 	for (int lll = 0; lll < 3; lll++)
 	{
 		errordblA3[lll] *= 1e14;
 	}
 	if ((errordblA3[0] < 100.0) && (errordblA3[1] < 100.0) && (errordblA3[2] < 100.0)) //why is this not working right?
-		std::cout << "Error * 1e14:     " << dA3ToStr(errordblA3) << std::endl; //will include this line no matter what
+		std::cout << "Error * 1e14:     " << errordblA3 << std::endl; //will include this line no matter what
 	int ret = testErrCode(testval, result, hcresult);
 
 	return ret;

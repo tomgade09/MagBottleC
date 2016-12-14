@@ -28,11 +28,11 @@ int main()
 	B.addBObj(&WC2);
 	
 	std::cout << "addBObj complete." << std::endl;
-	//std::cout.precision(14);
 	long long int loopind{ 0 };
 	dblArray3_t Bstr{ nulldA3_t };
-	while (B.getTime() <= 5e-7)
+	while (B.getTime() <= 5.0001e-6)
 	{
+		std::cout.precision(13);
 		//for (int iii = 2; iii <= 128; iii++) //commented code for testing for appropriate n order
 		//{
 			//Bstr = B.totalBatP(electron1.getP(), iii);
@@ -40,14 +40,14 @@ int main()
 			//std::cout << "  B: ";
 			//dA3coutSci(Bstr);
 		//}
-		Bstr = B.totalBatP(electron1.getP(), 37);
 		//exit(0);
+		Bstr = B.totalBatP(electron1.getP(), 37);
 		electron1.updP(Bstr, B.getdt());
 		
 		if (loopind % 1000 == 0)
 		{
-			std::cout << "Location: " << dA3ToStr(electron1.getP()) << " | Index: " << loopind << " | dT: " << B.getdt() << std::endl;
-			std::cout << "Velocity: " << dA3ToStr(electron1.getV()) << " | Time: " << std::scientific << B.getTime() << std::endl;
+			std::cout << "Location: " << electron1.getP() << " | Index: " << loopind << /*" | dT: " << B.getdt() << */std::endl;
+			std::cout << "Velocity: " << electron1.getV() << " | Time: " << B.getTime() << std::endl;
 			std::cout << std::endl;
 		}
 		

@@ -5,22 +5,19 @@
 //private functions
 void Particle::updV(const dblArray3_t& B, double dt)
 {
-	dblArray3_t a(cross3dVectorsAndMultByConst(velocity_m, B, qOVERm_m * dt));
-	for (int iii = 0; iii < 3; iii++)
-		velocity_m[iii] += a[iii];
+	velocity_m += cross3dVectorsAndMultByConst(velocity_m, B, qOVERm_m * dt);
 }
 
 //public functions
 void Particle::updP(const dblArray3_t& B, double dt)
 {
 	updV(B, dt);
-	for (int iii = 0; iii < 3; iii++)
-		position_m[iii] += (velocity_m[iii] * dt);
+	position_m += (velocity_m * dt);
 }
 
-dblArray3_t Particle::calcBatP(const dblArray3_t& p, int norder)
+dblArray3_t Particle::calcBatP(const dblArray3_t& P, int norder)
 {
-	dblArray3_t r{ p[0] - position_m[0], p[1] - position_m[1], p[2] - position_m[2] };
+	dblArray3_t r(P - position_m);
 	bool boo = 1;
 	for (int iii = 0; iii < 3; iii++)
 		boo &= (r[iii] < 1e-14);

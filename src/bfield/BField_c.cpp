@@ -21,9 +21,8 @@ dblArray3_t BField::totalBatP(const dblArray3_t& P, int norder, bool WarnFlag)
 			continue;
 		}
 		c = bObjPtrList_m[iii]->calcBatP(P,norder);
-		
-		for (int jjj = 0; jjj < 3; jjj++)
-			B[jjj] += c[jjj];
+
+		B += c;
 	}
 
 	incTime();

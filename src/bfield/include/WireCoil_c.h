@@ -41,9 +41,6 @@ public:
 	static double dBx(double x, void* data, double var[6]); //for gauss_legendre
 	static double dBy(double x, void* data, double var[6]);
 	static double dBz(double x, void* data, double var[6]);
-	//static double dBx(double x, double var[6]); //for numerical_int
-	//static double dBy(double x, double var[6]);
-	//static double dBz(double x, double var[6]);
 
 	dblArray3_t calcBatP(const dblArray3_t& P, int norder);
 };
