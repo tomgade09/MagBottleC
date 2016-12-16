@@ -9,14 +9,14 @@
 
 int main(int argc, char **argv)
 {
-	BField B = BField(1e-10);
+	BField B(1e-8);
 
 	std::cout << "BField creation complete." << std::endl;
 
-	dblArray3_t WC1cent{ -5.0, 0.0, 0.0 };
+	dblArray3_t WC1cent{-5.0, 0.0, 0.0 };
 	dblArray3_t WC2cent{ 5.0, 0.0, 0.0 };
-	dblArray3_t WCaxis{ 1.0, 0.0, 0.0 };
-	double WCrad{ 5.0 };
+	dblArray3_t WCaxis { 1.0, 0.0, 0.0 };
+	double WCrad	   { 5.0 };
 	WireCoil WC1 = WireCoil(WC1cent, WCaxis, 1, 1.0, WCrad, 0, "Left");
 	WireCoil WC2 = WireCoil(WC2cent, WCaxis, 1, 1.0, WCrad, 1, "Right");
 

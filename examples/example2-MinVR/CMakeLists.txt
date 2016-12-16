@@ -48,7 +48,7 @@ set(mbc_ex2
   ${mbc_ex2_vis_cpp} ${mbc_ex2_vis_h}
 )
 
-set(MinVR_lib ${MinVR_root_dir}/build/lib/MinVRd.lib)
+set(MinVR_lib ${MinVR_root_dir}/build/lib/MinVR.lib)
 
 source_group("Source Files" FILES ${mbc_ex2_cpp})
 source_group("Source Files\\Vis" FILES ${mbc_ex2_vis_cpp})
