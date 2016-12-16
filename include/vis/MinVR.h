@@ -1,12 +1,4 @@
 #pragma once
-#include <glew.h>
-#include <string>
-#include <iostream>
-#include <math.h>
-#define NOMINMAX
-#include <windows.h>
-#include <vector>
-
 #include <display/VRConsoleNode.h>
 #include <main/VRMain.h>
 #include <main/VREventHandler.h>
@@ -18,6 +10,14 @@
 #include "bfield/BField_c.h"
 #include "particle/Particle_c.h"
 #include "vis/ItemDraw_c.h"
+
+#include <glew.h>
+#include <string>
+#include <iostream>
+#include <math.h>
+#define NOMINMAX
+#include <windows.h>
+#include <vector>
 
 using namespace MinVR;
 

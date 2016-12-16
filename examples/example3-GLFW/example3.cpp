@@ -11,7 +11,7 @@
 
 int main()
 {
-	BField B = BField(2e-8);
+	BField B(2e-8);
 
 	std::cout << "BField creation complete." << std::endl;
 
