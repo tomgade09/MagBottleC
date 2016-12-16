@@ -1,6 +1,6 @@
-#include "Particle_c.h"
+#include "particle/Particle_c.h"
+#include "tools/vectortools.h"
 #include <cmath>
-#include "vectortools.h"
 
 //private functions
 void Particle::updV(const dblArray3_t& B, double dt)
@@ -19,7 +19,7 @@ dblArray3_t Particle::calcBatP(const dblArray3_t& P, int norder)
 {
 	dblArray3_t r(P - position_m);
 	bool boo = 1;
-	for (int iii = 0; iii < 3; iii++)
+	for (unsigned int iii = 0; iii < 3; iii++)
 		boo &= (r[iii] < 1e-14);
 	if (boo)
 		return{ 0.0, 0.0, 0.0 }; //no mag field "inside/at" point charge

@@ -1,8 +1,7 @@
-#include "WireCoil_c.h"
+#include "bfield/WireCoil_c.h"
+#include "integrate/gauss_legendre.h"
+#include "tools/vectortools.h"
 #include <cmath>
-#include "gauss_legendre.h"
-#include "vectortools.h"
-#include "numerical_int.h"
 
 //private functions
 
@@ -12,7 +11,7 @@ void WireCoil::Init()
 	dblArray3_t b(cartesianToSpherical(coilAxis_m));
 	axisRot_m[0] = 1.0;
 
-	for (int iii = 1; iii < 3; iii++)
+	for (unsigned int iii = 1; iii < 3; iii++)
 		axisRot_m[iii] = (a[iii] - b[iii]);
 	//somehow account for loop pair centers not being at {0,0,0}
 	//not sure if I should allow a dblArray3_t to be passed, and let the user worry about figuring out the right value
@@ -67,7 +66,7 @@ dblArray3_t WireCoil::calcBatP(const dblArray3_t& P, int norder)
 	double dByCst[6]{ c7_m, c4_m, c5_m, c6_m, 0.0, 0.0 };
 	double *dBCst[] { dBxCst, dByCst, dByCst };
 	
-	for (int jjj = 0; jjj < 3; jjj++)
+	for (unsigned int jjj = 0; jjj < 3; jjj++)
 		B[jjj] = gauss_legendre(norder, FP[jjj], NULL, 0, 2 * M_PI, dBCst[jjj]); //for gauss_legendre, n=5 to match default SciPy quadpack value
 	//32-37 yields some pretty close values...around this range, the numbers don't change up to 14 digits and match python almost perfectly
 	//around the 40s the numbers start fluctuating again

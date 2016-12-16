@@ -1,4 +1,4 @@
-#include "MinVR.h"
+#include "vis/MinVR.h"
 
 using namespace MinVR;
 

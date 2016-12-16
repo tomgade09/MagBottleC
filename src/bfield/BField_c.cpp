@@ -1,6 +1,6 @@
-#include "BField_c.h"
+#include "bfield/BField_c.h"
+#include "tools/vectortools.h"
 #include <iostream>
-#include "vectortools.h"
 
 dblArray3_t BField::totalBatP(const dblArray3_t& P, int norder, bool WarnFlag)
 {

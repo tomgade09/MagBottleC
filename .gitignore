@@ -30,4 +30,4 @@
 
 # Other Miscellanies + vb nonsense
 *.tmp
-vbProject/
+build/
