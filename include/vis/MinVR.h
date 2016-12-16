@@ -11,12 +11,14 @@
 #include "particle/Particle_c.h"
 #include "vis/ItemDraw_c.h"
 
-#include <glew.h>
+#define NOMINMAX
+#include <windows.h>
+//#include <glew.h>
+#include <gl/GL.h>
+#include <gl/GLU.h>
 #include <string>
 #include <iostream>
 #include <math.h>
-#define NOMINMAX
-#include <windows.h>
 #include <vector>
 
 using namespace MinVR;

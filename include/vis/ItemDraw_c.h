@@ -14,7 +14,7 @@ class ParticlePic : public Pic
 {
 private:
 	double radius_m;
-	/*std::vector<dblArray3_t> trail_m;*/
+	std::vector<dblArray3_t> trail_m;
 	dblArray3_t color_m;
 	int retain_m;
 	int interval_m;
@@ -28,10 +28,10 @@ public:
 	ParticlePic(int interval = 1, int retain = 0, double radius = 0.05, dblArray3_t color = { 0.0, 1.0, 0.0 }) :
 		radius_m{ radius }, color_m( color ), retain_m{ retain }, interval_m{ interval }, maketrail_m{ (retain > 1) }
 	{ 
-		/*if ((retain*interval) > 0)
-			trail_m.reserve(retain * interval);
+		if ((retain) > 1)
+			trail_m.reserve(retain);
 		else
-			trail_m.reserve(1);*/
+			trail_m.reserve(1);
 	}
 
 	void draw(const dblArray3_t& P);

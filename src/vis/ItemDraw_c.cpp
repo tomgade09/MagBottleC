@@ -1,4 +1,10 @@
-#include <glew.h>
+//#include <glew.h>
+
+#define NOMINMAX
+#include <windows.h>
+#include <gl/GL.h>
+#include <gl/GLU.h>
+
 #include "tools/constsandtypes.h"
 #include "tools/vectortools.h"
 #include "vis/ItemDraw_c.h"
@@ -58,23 +64,30 @@ void ParticlePic::incrementInd()
 void ParticlePic::setPos(const dblArray3_t& P)
 {
 	//add element to array if make trail is true
-	/*trail_m[trailind_m] = P;*/
+	if ((trailind_m % interval_m) == 0)
+	{
+		// code here needs to be modified - trailind_m / interval_m always 0
+		trail_m[(trailind_m / interval_m)] = P;
+		std::cout << "setPos if condition true " << trailind_m << " " << interval_m << " " << trailind_m % interval_m << std::endl;
+	}
 }
 
 //public
 void ParticlePic::draw(const dblArray3_t& P)
 {
-	//setPos(P);
-	/*for (unsigned int iii = 0; iii < trail_m.size(); iii++)
-	{*/
+	setPos(P);
+	//std::cout << trail_m.size() << std::endl;
+	for (unsigned int iii = 0; iii <= trail_m.size(); iii++)
+	{
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
-		//glTranslated(trail_m[iii][0], trail_m[iii][1], trail_m[iii][2]);
-		glTranslated(P[0], P[1], P[2]);
+		std::cout << trail_m[iii] << "  " << trailind_m
+		glTranslated(trail_m[iii][0], trail_m[iii][1], trail_m[iii][2]);
+		//glTranslated(P[0], P[1], P[2]);
 		drawSphere(radius_m);
 		glPopMatrix();
-	/*}
-	incrementInd();*/
+	}
+	incrementInd();
 }
 
 void WireCoilPic::draw(const dblArray3_t& dummy)
