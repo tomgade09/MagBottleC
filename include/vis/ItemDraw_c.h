@@ -1,6 +1,7 @@
 #ifndef ITEMDRAW_C_H
 #define ITEMDRAW_C_H
 #include <list>
+#include <iostream>
 #include "tools/constsandtypes.h"
 
 class Pic
@@ -19,7 +20,6 @@ private:
 	int retain_m;
 	int interval_m;
 	bool maketrail_m;
-	//int trailind_m{ 0 };
 
 	void setPos(const dblArray3_t& P);
 	void incrementInd();
