@@ -1,6 +1,6 @@
 #ifndef ITEMDRAW_C_H
 #define ITEMDRAW_C_H
-#include <vector>
+#include <list>
 #include "tools/constsandtypes.h"
 
 class Pic
@@ -14,12 +14,12 @@ class ParticlePic : public Pic
 {
 private:
 	double radius_m;
-	std::vector<dblArray3_t> trail_m;
+	std::list<dblArray3_t> trail_m;
 	dblArray3_t color_m;
 	int retain_m;
 	int interval_m;
 	bool maketrail_m;
-	int trailind_m{ 0 };
+	//int trailind_m{ 0 };
 
 	void setPos(const dblArray3_t& P);
 	void incrementInd();
@@ -28,10 +28,19 @@ public:
 	ParticlePic(int interval = 1, int retain = 0, double radius = 0.05, dblArray3_t color = { 0.0, 1.0, 0.0 }) :
 		radius_m{ radius }, color_m( color ), retain_m{ retain }, interval_m{ interval }, maketrail_m{ (retain > 1) }
 	{ 
-		if ((retain) > 1)
-			trail_m.reserve(retain);
+		if (retain > 1)
+		{
+			for (int iii = 0; iii < retain; iii++)
+				trail_m.push_back(nulldA3_t);
+			std::cout << "trail_m.size() " << trail_m.size() << std::endl;
+		}
 		else
-			trail_m.reserve(1);
+			trail_m.push_back(nulldA3_t);
+		if (interval < 1)
+		{
+			std::cout << "Can't set interval to less than 1.  Setting to 1." << std::endl;
+			interval_m = 1;
+		}
 	}
 
 	void draw(const dblArray3_t& P);

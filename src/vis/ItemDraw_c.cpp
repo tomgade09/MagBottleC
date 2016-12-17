@@ -50,25 +50,32 @@ void drawTorus(int numc, int numt, double radius, double thickness = 0.01, dblAr
 void ParticlePic::incrementInd()
 {
 	//circular buffer
-	if (!maketrail_m)
-		return;
-	if (trailind_m < (retain_m * interval_m))
+	//if (!maketrail_m)
+		//return;
+	/*if (trailind_m < (retain_m * interval_m))
 	{
 		trailind_m++;
 		return;
-	}
-	trailind_m = 0;
+	}*/
+	//trailind_m = 0;
+	//trail_m.begin();
 }
 
 void ParticlePic::setPos(const dblArray3_t& P)
 {
-	//add element to array if make trail is true
+	/*if (interval_m == 1) //code on bottom sets index to 0 every time if interval is 1
+	{
+		trail_m[trailind_m] = P;
+		return;
+	}
 	if ((trailind_m % interval_m) == 0)
 	{
-		// code here needs to be modified - trailind_m / interval_m always 0
 		trail_m[(trailind_m / interval_m)] = P;
-		std::cout << "setPos if condition true " << trailind_m << " " << interval_m << " " << trailind_m % interval_m << std::endl;
-	}
+		//std::cout << "setPos if condition true " << trailind_m << " " << interval_m << " " << trailind_m % interval_m << std::endl;
+	}*/
+	//trail_m[2] = nulldA3_t;
+	trail_m.pop_back();
+	trail_m.push_front(P);
 }
 
 //public
@@ -76,17 +83,17 @@ void ParticlePic::draw(const dblArray3_t& P)
 {
 	setPos(P);
 	//std::cout << trail_m.size() << std::endl;
-	for (unsigned int iii = 0; iii <= trail_m.size(); iii++)
+	for (std::list<dblArray3_t>::iterator it = trail_m.begin(); it != trail_m.end(); ++it)
 	{
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
-		std::cout << trail_m[iii] << "  " << trailind_m;
-		glTranslated(trail_m[iii][0], trail_m[iii][1], trail_m[iii][2]);
-		//glTranslated(P[0], P[1], P[2]);
+		//std::cout << trail_m[iii] << "  " << trailind_m;
+		dblArray3_t trans = *it;
+		glTranslated(trans[0], trans[1], trans[2]);
 		drawSphere(radius_m);
 		glPopMatrix();
 	}
-	incrementInd();
+	//incrementInd();
 }
 
 void WireCoilPic::draw(const dblArray3_t& dummy)

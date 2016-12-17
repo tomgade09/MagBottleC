@@ -30,8 +30,8 @@
         <Caption>Desktop</Caption>
 				<XPos>100</XPos>
 				<YPos>100</YPos>
-				<Width>640</Width>
-				<Height>400</Height>
+				<Width>1280</Width>
+				<Height>720</Height>
         
 			</RootNode>
 		</Desktop>

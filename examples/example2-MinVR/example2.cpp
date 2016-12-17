@@ -9,7 +9,7 @@
 
 int main(int argc, char **argv)
 {
-	BField B(5e-8);
+	BField B(1e-8);
 
 	std::cout << "BField creation complete." << std::endl;
 
@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 	MyVRApp app(argc, argv);
 	app.setBF(&B);
 	app.addParticle(&electron1);
-	ParticlePic e1Pic(1, 500, 0.01);
+	ParticlePic e1Pic(1, 30, 0.01);
 	WireCoilPic wc1Pic(WC1cent, WCaxis, WCrad);
 	WireCoilPic	wc2Pic(WC2cent, WCaxis, WCrad);
 	app.addPic(&e1Pic);
