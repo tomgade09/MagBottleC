@@ -1,6 +1,5 @@
 #ifndef CONSTSANDTYPES_H
 #define CONSTSANDTYPES_H
-#include <iostream>
 #include <array>
 
 #define SCALE 1e-5

@@ -1,9 +1,8 @@
-//#include <glew.h>
-
 #define NOMINMAX
 #include <windows.h>
 #include <gl/GL.h>
 #include <gl/GLU.h>
+#include <iostream>
 
 #include "tools/constsandtypes.h"
 #include "tools/vectortools.h"
@@ -81,7 +80,7 @@ void ParticlePic::draw(const dblArray3_t& P)
 	{
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
-		std::cout << trail_m[iii] << "  " << trailind_m
+		std::cout << trail_m[iii] << "  " << trailind_m;
 		glTranslated(trail_m[iii][0], trail_m[iii][1], trail_m[iii][2]);
 		//glTranslated(P[0], P[1], P[2]);
 		drawSphere(radius_m);

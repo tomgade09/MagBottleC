@@ -4,7 +4,9 @@
 #include "particle/Particle_c.h"
 #include "tools/vectortools.h"
 #include "vis/ItemDraw_c.h"
-//#include <glew.h>
+
+#define NOMINMAX
+#include <Windows.h>
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include <GLFW/glfw3.h>

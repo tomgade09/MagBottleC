@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MINVR_MBC_H
+#define MINVR_MBC_H
 #include <display/VRConsoleNode.h>
 #include <main/VRMain.h>
 #include <main/VREventHandler.h>
@@ -13,7 +14,6 @@
 
 #define NOMINMAX
 #include <windows.h>
-//#include <glew.h>
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include <string>
@@ -76,3 +76,4 @@ protected:
 
 	void drawPics(const dblArray3_t& P);
 };
+#endif

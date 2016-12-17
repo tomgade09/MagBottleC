@@ -20,6 +20,7 @@ find_package(OpenGL REQUIRED)
 #Example depends on MinVR package located in same parent directory as MagBottleC root folder:
 #{parent_dir}/MagBottleC
 #{parent_dir}/MinVR2
+#Or modify the path to match MinVR2 location
 
 set(MinVR_root_dir ${mbc_base_dir}/../MinVR2)
 
