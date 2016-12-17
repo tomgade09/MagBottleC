@@ -9,20 +9,20 @@
 
 int main(int argc, char **argv)
 {
-	BField B(1e-8);
+	BField B(1e-7);
 
 	std::cout << "BField creation complete." << std::endl;
 
 	dblArray3_t WC1cent{-5.0, 0.0, 0.0 };
 	dblArray3_t WC2cent{ 5.0, 0.0, 0.0 };
 	dblArray3_t WCaxis { 1.0, 0.0, 0.0 };
-	double WCrad	   { 5.0 };
+	double WCrad{ 5.0 };
 	WireCoil WC1 = WireCoil(WC1cent, WCaxis, 1, 1.0, WCrad, 0, "Left");
 	WireCoil WC2 = WireCoil(WC2cent, WCaxis, 1, 1.0, WCrad, 1, "Right");
 
 	std::cout << "WireCoils created." << std::endl;
 
-	dblArray3_t e1posinit{-4.75, 1.0, 1.0 };
+	dblArray3_t e1posinit{-4.75, 0.0, 0.0 };
 	dblArray3_t e1velinit{ 1000.0, 1000.0, 1000.0 };
 	Particle electron1 = Particle(-1.60217657e-19, 9.10938356e-31, e1posinit, e1velinit);
 
@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 	MyVRApp app(argc, argv);
 	app.setBF(&B);
 	app.addParticle(&electron1);
-	ParticlePic e1Pic(1, 30, 0.01);
+	ParticlePic e1Pic(10, 100, 0.01);
 	WireCoilPic wc1Pic(WC1cent, WCaxis, WCrad);
 	WireCoilPic	wc2Pic(WC2cent, WCaxis, WCrad);
 	app.addPic(&e1Pic);
