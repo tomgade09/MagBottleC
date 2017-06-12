@@ -93,7 +93,17 @@ int main()
 			picptr[iii]->draw(elecP);
 		
 		if (indind % 1000 == 0)
-			std::cout << indind << " : " << elecP << std::endl;
+		{
+			/*
+			Bplen = np.sqrt(Bp[0]**2 + Bp[1]**2 + Bp[2]**2)
+			BpdotV = np.dot(Bp, PartObj.v)
+			*/
+			dblArray3_t Bp = B.totalBatP(elecP, 37, false);
+			dblArray3_t elecV = electron1.getV();
+			double BpdotV = Bp[0] * elecV[0] + Bp[1] * elecV[1] + Bp[2] * elecV[2];
+			double Bplen = pow(pow(Bp[0],2) + pow(Bp[1],2) + pow(Bp[2],2), 0.5);
+			std::cout << indind << " : " << elecP << " | Vpara: " << BpdotV / Bplen << std::endl;
+		}
 		indind++;
 		glfwSwapBuffers(window);
 		glEnd();
