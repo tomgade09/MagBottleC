@@ -15,7 +15,7 @@
 
 int main()
 {
-	BField B(2e-8);
+	BField B(5e-7);
 
 	std::cout << "BField creation complete." << std::endl;
 
@@ -56,8 +56,8 @@ int main()
 	if (!(glfwInit()))
 		return -1;
 	
-	int width = 1000;
-	int height = 1000;
+	int width = 1920;
+	int height = 1080;
 	double ratio = static_cast<double>(width) / height;
 	window = glfwCreateWindow(width, height, "MagBottleC", NULL, NULL);
 	
@@ -77,7 +77,8 @@ int main()
 
 	while (!glfwWindowShouldClose(window))
 	{
-		electron1.updP(B.totalBatP(electron1.getP(), 37), B.getdt());
+		//electron1.updP(B.totalBatP(electron1.getP(), 37), B.getdt()); //old method
+		B.updateParticleP_V(&electron1, 37);
 		elecP = electron1.getP();
 		glClear(GL_COLOR_BUFFER_BIT);
 		glViewport(0, 0, width, height);
