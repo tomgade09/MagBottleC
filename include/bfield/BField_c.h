@@ -4,6 +4,7 @@
 #include <vector>
 #include "bfield/BObject_c.h"
 #include "tools/constsandtypes.h"
+#include "particle/Particle_c.h"
 
 class BField
 {
@@ -33,6 +34,11 @@ public:
 	//defined in .cpp
 	void addBObj(BObject* bobjptr); //add pointer to instance of BObject to bObjPtrList_m
 	dblArray3_t totalBatP(const dblArray3_t& p, int norder, bool WarnFlag = 0);
+	//dblArray3_t totalFonParticle(Particle* partobj, int norder);
+	void updateParticleP_V(Particle* partobj, int norder);
+	dblArray3_t foRKLorentz(Particle* partobj, double dt, int norder);
+	dblArray3_t calcMirrorF(Particle* partobj, int norder);
+	dblArray3_t totalFatP(Particle* partobj, double dt, int norder);
 };
 
 #endif

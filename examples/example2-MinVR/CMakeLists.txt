@@ -57,4 +57,4 @@ source_group("Header Files\\Vis" FILES ${mbc_ex2_vis_h})
 
 add_executable(Example2 ${mbc_ex2})
 
-target_link_libraries(Example2 MagBottleC "glew32.lib" ${MinVR_lib} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${ALL_LIBS})
+target_link_libraries(Example2 MagBottleC ${MinVR_lib} ${OPENGL_gl_LIBRARY} ${OPENGL_glu_LIBRARY} ${ALL_LIBS})

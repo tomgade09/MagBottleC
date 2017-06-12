@@ -28,8 +28,8 @@ int main()
 
 	std::cout << "WireCoils created." << std::endl;
 
-	dblArray3_t e1posinit{ -4.75, 0.0, 0.0 };
-	dblArray3_t e1velinit{ 1000.0, 1000.0, 1000.0 };
+	dblArray3_t e1posinit{ -4.0, 3.0, 0.0 };
+	dblArray3_t e1velinit{ 500.0, 4000.0, 4000.0 };
 	Particle electron1 = Particle(-1.60217657e-19, 9.10938356e-31, e1posinit, e1velinit);
 
 	std::cout << "Electron created." << std::endl;

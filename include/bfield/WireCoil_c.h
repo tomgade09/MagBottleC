@@ -2,6 +2,8 @@
 #define BFIELD_WIRECOIL_H
 #include "tools/constsandtypes.h"
 #include "bfield/BObject_c.h"
+#include "particle/Particle_c.h"
+#include "bfield/BField_c.h"
 
 class WireCoil : public BObject
 {
@@ -18,7 +20,6 @@ private:
 	double d_m; //distance along x axis...define this way?  is needed if each loop defined separately?
 	double constant_m; //constant that is easier to calculate once
 	bool rightLoop_m; //is this the left or right loop? right loop = 1, left loop = 0 - of course left/right are relative - B flows from left to right loop
-	//what other variables needed?
 
 	double c1_m{ 0.0 }; //variables for numerical integration
 	double c2_m{ 0.0 };

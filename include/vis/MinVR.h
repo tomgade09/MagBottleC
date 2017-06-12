@@ -60,7 +60,7 @@ public:
 
 	dblArray3_t partBVP(Particle* particle)
 	{
-		particle->updP(bfieldp_m->totalBatP(particle->getP(), 37), bfieldp_m->getdt());
+		bfieldp_m->updateParticleP_V(particle, 37);
 		return particle->getP();
 	}
 

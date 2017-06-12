@@ -8,10 +8,28 @@ void Particle::updV(const dblArray3_t& B, double dt)
 	velocity_m += cross3dVectorsAndMultByConst(velocity_m, B, qOVERm_m * dt);
 }
 
+void Particle::updV(const dblArray3_t& dv)
+{ velocity_m += dv; }
+
+/*
+    def updP(self, dF, dt):
+        """Calculate the new position based on the particle's velocity."""
+        dv = np.array(dF) * dt / self.mass
+        self.__updV(dv, dt)
+        self.p = [self.p[0] + self.v[0] * dt, self.p[1] + self.v[1] * dt,
+            self.p[2] + self.v[2] * dt]
+*/
+
 //public functions
 void Particle::updP(const dblArray3_t& B, double dt)
 {
 	updV(B, dt);
+	position_m += (velocity_m * dt);
+}
+
+void Particle::updP(const dblArray3_t& dF, double dt, bool newmethod)
+{
+	updV(dF * (dt / mass_m));
 	position_m += (velocity_m * dt);
 }
 
