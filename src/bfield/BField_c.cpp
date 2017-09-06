@@ -67,13 +67,17 @@ void BField::addBObj(BObject* bobjptr)
 
 dblArray3_t BField::totalFatP(Particle* partobj, double dt, int norder)
 {
-	return foRKLorentz(partobj, dt, norder) + calcMirrorF(partobj, norder);
+	dblArray3_t fLorentz, fMirror;
+	fLorentz = foRKLorentz(partobj, dt, norder);
+	fMirror = calcMirrorF(partobj, norder);
+	//std::cout << "fLorentz (old): " << fLorentz << "\nfMirror: " << fMirror << "\n";
+	return  fLorentz + fMirror;
 }
 
 void BField::updateParticleP_V(Particle* partobj, int norder)
 {
 	partobj->updP(totalFatP(partobj, dt_m, norder), dt_m, true);
-	incTime();
+	incTime();//an issue if more than one particle in sim - change later
 }
 
 dblArray3_t BField::foRKLorentz(Particle* partobj, double dt, int norder)

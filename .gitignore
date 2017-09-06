@@ -31,3 +31,5 @@
 # Other Miscellanies + vb nonsense
 *.tmp
 build/
+examples/Bgridbuilder
+examples/CBcompare

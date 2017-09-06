@@ -30,7 +30,7 @@ private:
 	double c6_m{ 0.0 };
 	double c7_m{ 0.0 };
 
-	void setIntegConst(const dblArray3_t& P);
+	
 
 public:
 	WireCoil(const dblArray3_t& coilCenter, const dblArray3_t& coilAxis, int N, double I, double R, bool rightLoop, std::string name = "", int* window = nullptr, int* pic = nullptr) 
@@ -39,9 +39,19 @@ public:
 
 	void Init();
 
+	void setIntegConst(const dblArray3_t& P); //set back to private after compile
 	static double dBx(double x, void* data, double var[6]); //for gauss_legendre
 	static double dBy(double x, void* data, double var[6]);
 	static double dBz(double x, void* data, double var[6]);
+
+	double getc1_m() { return c1_m; };
+	double getc2_m() { return c2_m; };
+	double getc3_m() { return c3_m; };
+	double geta4_m() { return a4_m; };
+	double getc4_m() { return c4_m; };
+	double getc5_m() { return c5_m; };
+	double getc6_m() { return c6_m; };
+	double getc7_m() { return c7_m; };
 
 	dblArray3_t calcBatP(const dblArray3_t& P, int norder);
 };

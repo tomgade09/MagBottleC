@@ -2,6 +2,7 @@
 #include "integrate/gauss_legendre.h"
 #include "tools/vectortools.h"
 #include <cmath>
+#include <iostream>
 
 //private functions
 
@@ -24,14 +25,14 @@ void WireCoil::Init()
 
 void WireCoil::setIntegConst(const dblArray3_t& P)
 {
-	c1_m = { -constant_m * R_m * P[2] };
-	c2_m = { -constant_m * R_m * P[1] };
-	c3_m = { constant_m * pow(R_m,2) };
-	a4_m = { pow(P[0],2) + pow(P[1],2) + pow(P[2],2) };
-	c4_m = { a4_m + 2 * P[0] * d_m + pow(d_m, 2) + pow(R_m, 2) };
-	c5_m = { -2 * P[1] * R_m };
-	c6_m = { -2 * P[2] * R_m };
-	c7_m = { constant_m * R_m * (P[0] + d_m) };
+	c1_m = -constant_m * R_m * P[2];
+	c2_m = -constant_m * R_m * P[1];
+	c3_m =  constant_m * pow(R_m,2);
+	a4_m =  pow(P[0],2) + pow(P[1],2) + pow(P[2],2);
+	c4_m =  a4_m + 2 * P[0] * d_m + pow(d_m, 2) + pow(R_m, 2);
+	c5_m = -2 * P[1] * R_m;
+	c6_m = -2 * P[2] * R_m;
+	c7_m =  constant_m * R_m * (P[0] + d_m);
 }
 
 //public functions
@@ -73,84 +74,3 @@ dblArray3_t WireCoil::calcBatP(const dblArray3_t& P, int norder)
 
 	return B;
 }
-
-/* Python code below
-def calcGuidingCenter(self, PartObj, dt) :
-# The method :
-# 1. Calculate B at the position of the particle
-# 2. Calculate q * (v x B) (Lorentz F), perpendicular velocity, and Larmour radius
-#       These will be used to calculate a Guiding Center location, They won't be exact but should be really close
-#       FLorentz / (length of F lorentz) - gives a unit vector in the direction of the Lorentz force - toward the GC
-#       Multiply this vector by Larmour radius and add to the particle position to get the approx GC
-# 3. (optional)Calculate B at guiding center, if desired, or use GC for other purposes
-#       - Use this Bgc to calculate the mirror force on the particle for increased accuracy
-
-# Note: subscript "p" denotes quantities calculated at a point P / with the B calculated at point P, while "gc" is used to
-# denote the same quantities at the guiding center.
-# This method is used to overcome a difficulty related to the fact that we need B at the guiding center in order to calculate
-# vperp(which is needed for Larmour radius rL).We can't get rL without B at GC and we can't know where GC is without rL.
-# This method uses vperp from B at the particle's position (instead of B at GC), but it should be close enough to get the approx. location of GC.
-# At any rate, it will be closer than calculating from the particle's position P.
-
-	Bp = np.array(self.calcBatP(PartObj.p))
-	Bplen = np.sqrt(Bp[0] * *2 + Bp[1] * *2 + Bp[2] * *2)
-
-	FLorentz = self.foRKLorentz(PartObj, dt)
-	FLlen = np.sqrt(FLorentz[0] * *2 + FLorentz[1] * *2 + FLorentz[2] * *2)
-
-	vp_perp = np.sqrt((PartObj.v[0] * *2 + PartObj.v[1] * *2 + PartObj.v[2] * *2) - (np.dot(Bp, PartObj.v) / Bplen)**2)
-	rLp = PartObj.mass * vp_perp / (np.abs(PartObj.q) * Bplen)
-
-	return np.array(PartObj.p + (rLp / FLlen) * FLorentz)
-
-////////////////////////def drawBfromGC(self, PartObj, FieldObj, numiter = 5500, multlng = 500) :
-							j = rotateVector(self.calcGuidingCenter(PartObj, FieldObj.dt), self.axiscf_theta, self.axiscf_phi) + self.Cpair
-							FieldObj.drawBlines(j, numiter = numiter, multlng = multlng)
-
-////////////////////////def calcDriftsF(self, PartObj) :
-							return self.calcMirrorF(PartObj)
-
-DONE!!  def calcMirrorF(self, PartObj) :
-			Bp = np.array(self.calcBatP(PartObj.p))
-			Bplen = np.sqrt(Bp[0] * *2 + Bp[1] * *2 + Bp[2] * *2)
-			BpdotV = np.dot(Bp, PartObj.v)
-
-			scaledLength = 1e-8 #total length of vector in the direction of B that is used to calculate B(p + ds) and B(p - ds)
-			halfds = (scaledLength / Bplen) * Bp
-			
-			Bpminus = np.array(self.calcBatP(PartObj.p - halfds)) #using scaled Bp vector as an element, ds, along which B is calculated - dB / ds = (B(p + ds) - B(p - ds)) / ds
-			Bpplus = np.array(self.calcBatP(PartObj.p + halfds))
-
-			vperp2 = (PartObj.v[0] * *2 + PartObj.v[1] * *2 + PartObj.v[2] * *2) - (BpdotV / Bplen)**2 #length of vperp squared
-			mu = PartObj.mass * vperp2 / (2 * Bplen) # should be invariant - so do I need to calculate every time ? Check for invariance
-			FgradB = -mu * (Bpplus - Bpminus)
-
-			for i in range(3) :
-				if abs(Bp[i]) < 1e-20 : #Not sure, think it should work for the examples, but probably not general enough - maybe a ratio to other elements ?
-					FgradB[i] = 0. #More for the first calculation than anything.Only used once->when exactly on axis
-					#print("zeroed a FgradB element ", i)
-					continue
-				FgradB[i] = FgradB[i] / (2 * scaledLength)
-
-			return FgradB[0], FgradB[1], FgradB[2]
-
-DONE!!  def foRKLorentz(self, PartObj, h) :
-			B1 = self.calcBatP(PartObj.p[:])
-			k11 = PartObj.eom * np.cross(PartObj.v, B1) #accleration
-
-			B2 = self.calcBatP(PartObj.p + k11 * h * h / 4)
-			k22 = PartObj.eom * np.cross(PartObj.v + k11 * h / 2, B2)
-
-			B3 = self.calcBatP(PartObj.p + k22 * h * h / 4)
-			k33 = PartObj.eom * np.cross(PartObj.v + k22 * h / 2, B3)
-
-			B4 = self.calcBatP(PartObj.p + k33 * h * h)
-			k44 = PartObj.eom * np.cross(PartObj.v + k33 * h, B4)
-
-			return (PartObj.mass * (k11 + 2 * (k22 + k33) + k44) / 6) #mass * accel = Force
-
-DONE!!  def calcTotalF(self, PartObj, dt) :
-			Fl = np.array(self.foRKLorentz(PartObj, dt))
-			Fd = np.array(self.calcDriftsF(PartObj))
-			return (Fl + Fd)
-*/
